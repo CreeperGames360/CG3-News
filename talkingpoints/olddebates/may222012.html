@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Chargie News!</title>
+    <link rel="icon" type="image/png" href="../../assets/favicon.png">
+    <style>
+        /* Global Styles to mimic early 2000s browser defaults */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #FFFFFF;
+            font-size: 12px;
+            color: #000000;
+        }
+
+        a {
+            color: #002266;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+            color: #CC0000;
+        }
+
+        /* Top Utility Bar (Grey) */
+        .top-utility-bar {
+            background-color: #999999;
+            border-bottom: 1px solid #666666;
+            display: flex;
+            align-items: stretch;
+            height: 28px;
+        }
+
+        .mini-logo {
+            border-right: 1px solid #666666;
+            border-left: 1px solid #CCCCCC;
+            color: #FFFFFF;
+            font-family: "Arial Black", Gadget, sans-serif;
+            font-weight: bold;
+            font-size: 11px;
+            padding: 0 12px;
+            display: flex;
+            align-items: center;
+            border-right: 1px solid #555555;
+        }
+
+        .top-nav {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-nav li {
+            border-right: 1px solid #666666;
+            border-left: 1px solid #CCCCCC;
+            display: flex;
+        }
+
+        /* Making top nav items fully clickable with active states */
+        .top-nav a {
+            color: #FFFFFF;
+            text-transform: uppercase;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        .top-nav a:hover {
+            background-color: #777777;
+            color: #FFFFFF;
+        }
+
+        /* Search Section */
+        .search-container {
+            margin-left: auto;
+            background-color: #990000;
+            display: flex;
+            align-items: center;
+            padding: 0 8px;
+            border-left: 2px solid #660000;
+        }
+
+        .search-label {
+            color: #FFFF00;
+            font-weight: bold;
+            font-size: 11px;
+            margin-right: 6px;
+            text-transform: uppercase;
+        }
+
+        .search-input {
+            height: 12px;
+            border: 1px solid #000000;
+            padding: 1px 2px;
+            font-size: 11px;
+        }
+
+        .search-button {
+            height: 20px;
+            background-color: #CCCCCC;
+            border: 1px solid #666666;
+            font-size: 11px;
+            margin-left: 4px;
+            cursor: pointer;
+            padding: 0 4px;
+        }
+
+        /* Main Red Banner */
+        .main-banner {
+            background-color: #990000;
+            color: #FFFFFF;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+            border-bottom: 2px solid #5e0000;
+            padding-left: 10px;
+        }
+
+        .brand-title {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: -1px;
+        }
+
+        .brand-blocks {
+            background-color: #FFFFFF;
+            color: #990000;
+            padding: 2px 6px;
+            font-family: "Arial Black", Gadget, sans-serif;
+            margin-right: 6px;
+            letter-spacing: 1px;
+        }
+
+        .edition-subtext {
+            color: #CCCC99;
+            font-size: 11px;
+            text-transform: uppercase;
+            font-weight: bold;
+            margin-left: 10px;
+            letter-spacing: 1px;
+        }
+
+        .banner-graphic {
+            height: 100%;
+            width: 180px;
+            background: linear-gradient(90deg, rgba(153,0,0,0) 0%, rgba(120,0,0,1) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b33333;
+            font-size: 28px;
+            overflow: hidden;
+            font-weight: bold;
+            font-family: "Arial Black", Gadget, sans-serif;
+            letter-spacing: 2px;
+        }
+
+        /* Location / Breadcrumb Bar (Khaki/Tan) */
+        .location-bar {
+            background-color: #CCCC99;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: #000000;
+            border-bottom: 1px solid #999996;
+        }
+
+        .location-bar span {
+            color: #002266;
+            font-weight: bold;
+        }
+
+        /* subheader txt */
+        .subhd-txt {
+            padding: 4px 10px;
+            font-size: 11px;
+            color: #444444;
+            border-bottom: 1px solid #CCCCCC;
+            background-color: #FAFAFA;
+            font-style: italic;
+        }
+
+        /* ==========================================================================
+           MAIN CONTENT LAYOUT (3-Column Web 1.0 Table Style)
+           ========================================================================== */
+        
+        .main-layout {
+            display: grid;
+            grid-template-columns: 140px 1fr 240px;
+            min-height: 500px;
+        }
+
+        /* Left Sidebar (Navigation Column) */
+        .left-sidebar {
+            background-color: #EEEEEE;
+            border-right: 1px solid #CCCCCC;
+            padding-top: 10px;
+        }
+
+        .side-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .side-nav li {
+            border-bottom: 1px solid #FFFFFF;
+        }
+
+        .side-nav a {
+            display: block;
+            padding: 5px 10px;
+            color: #002266;
+            font-weight: bold;
+            font-size: 11px;
+            border-left: 4px solid #CCCCCC;
+        }
+
+        .side-nav a:hover {
+            background-color: #DDDDDD;
+            border-left: 4px solid #990000;
+            text-decoration: none;
+        }
+
+        .side-nav .active a {
+            background-color: #FFFFFF;
+            border-left: 4px solid #990000;
+            color: #990000;
+        }
+
+        /* Center Column (Core News Feed) */
+        .center-column {
+            padding: 15px;
+            border-right: 1px solid #CCCCCC;
+        }
+
+        /* Right Sidebar (Features and "See Also" blocks) */
+        .right-sidebar {
+            background-color: #F6F6F6;
+            padding: 15px;
+        }
+
+        .box-feature {
+            background-color: #FFFFFF;
+            border: 1px solid #CCCCCC;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .box-feature h3 {
+            margin: 0 0 5px 0;
+            font-size: 12px;
+            color: #000000;
+            text-transform: uppercase;
+            border-bottom: 2px solid #CCCC99;
+            padding-bottom: 2px;
+        }
+
+        .video-panel {
+            background-color: #E6ECF2;
+            border: 1px solid #99B3CC;
+            padding: 8px;
+            margin-bottom: 15px;
+        }
+
+        .video-link::before {
+            content: "▶ ";
+            color: #990000;
+            font-size: 10px;
+        }
+
+        /* ==========================================================================
+            FORUM / DISCUSSION BOARD STYLES
+           ========================================================================== */
+
+        .discussion-board {
+            margin-top: 5px;
+        }
+
+        .thread-title {
+            font-size: 18px;
+            color: #002266;
+            margin: 0 0 15px 0;
+            font-weight: bold;
+            border-bottom: 2px solid #CCCC99;
+            padding-bottom: 4px;
+        }
+
+        /* Individual Post Container */
+        .forum-post {
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            border: 1px solid #CCCCCC;
+            background-color: #F9F9F9;
+            margin-bottom: 12px;
+        }
+
+        /* Left side: User Profile Info */
+        .post-profile {
+            background-color: #EAEAEA;
+            border-right: 1px solid #CCCCCC;
+            padding: 8px;
+            text-align: center;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border: 1px solid #666666;
+            background-color: #FFFFFF;
+            display: block;
+            margin: 0 auto 4px auto;
+            object-fit: cover;
+        }
+
+        .username {
+            font-weight: bold;
+            color: #990000;
+            font-size: 11px;
+            word-wrap: break-word;
+        }
+
+        .user-title {
+            font-size: 10px;
+            color: #666666;
+            font-style: italic;
+        }
+
+        /* Right side: The Message Content */
+        .post-content {
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .post-meta {
+            font-size: 10px;
+            color: #666666;
+            border-bottom: 1px solid #EEEEEE;
+            padding-bottom: 4px;
+            margin-bottom: 8px;
+        }
+
+        .post-text {
+            font-size: 12px;
+            line-height: 1.5;
+            color: #000000;
+        }
+
+        /* Quick Reply Form */
+        .reply-box {
+            margin-top: 20px;
+            border: 1px solid #99B3CC;
+            background-color: #E6ECF2;
+            padding: 12px;
+        }
+
+        .reply-box h3 {
+            margin: 0 0 8px 0;
+            font-size: 12px;
+            color: #002266;
+            text-transform: uppercase;
+        }
+
+        .reply-textarea {
+            width: 98%;
+            height: 60px;
+            border: 1px solid #666666;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            padding: 4px;
+            margin-bottom: 6px;
+            resize: none;
+        }
+
+        /* dropdown styling */
+        /* Hide archive links by default */
+.video-panel .archive-links {
+    display: none;
+    list-style: none;
+    margin: 8px 0 0 0;
+    padding: 0;
+    border-top: 1px dashed #99B3CC;
+}
+
+.video-panel .archive-links li {
+    padding: 4px 0 4px 5px;
+    border-bottom: 1px solid #E6ECF2;
+}
+
+.video-panel .archive-links a {
+    font-size: 11px;
+    color: #002266;
+    font-weight: normal;
+}
+
+.video-panel .archive-links a:hover {
+    color: #990000;
+    text-decoration: underline;
+}
+
+/* Reveal links when hovering over the panel */
+.archive-dropdown:hover .archive-links {
+    display: block;
+}
+    </style>
+</head>
+<body>
+
+    <div class="top-utility-bar">
+        <div class="mini-logo">Front Page</div>
+        <ul class="top-nav">
+            <li><a href="#news">News</a></li>
+            <li><a href="#sport">Sport</a></li>
+            <li><a href="#weather">Weather</a></li>
+            <li><a href="#local">Local</a></li>
+            <li><a href="#index">A-Z Index</a></li>
+        </ul>
+        <div class="search-container">
+            <span class="search-label">Search</span>
+            <input type="text" class="search-input" />
+            <input type="submit" value="Go" class="search-button" />
+        </div>
+    </div>
+
+    <div class="main-banner">
+        <div class="brand-title">
+            <span class="brand-blocks">C&thinsp;G&thinsp;3</span>NEWS<span class="edition-subtext">Chargie Edition</span>
+        </div>
+    </div>
+
+    <div class="location-bar">
+        You are in: <span>Discussion Board</span>
+    </div>
+
+    <div class="subhd-txt">
+        Talk, hang out, have fun, whatever.
+    </div>
+
+    <div class="main-layout">
+        
+        <div class="left-sidebar">
+            <ul class="side-nav">
+                <li><a href="../../index.html">World</a></li>
+                <li><a href="#">US</a></li>
+                <li><a href="#">Americas</a></li>
+                <li><a href="#">Business</a></li>
+                <li><a href="#">Sci/Tech</a></li>
+                <li><a href="#">Entertainment</a></li>
+                <li><a href="#">Satire Desk</a></li>
+            </ul>
+        </div>
+
+        <div class="center-column">
+            <div class="discussion-board">
+                <h2 class="thread-title">Topic: hi hi hi!!</h2>
+                
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/chargie2011to2021.png" alt="Chargie2011" class="avatar" />
+                        <div class="username">ChargieAwesome</div>
+                        <div class="user-title">does news posts as hobby, hoping to be more</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:24 GMT</div>
+                        <div class="post-text">
+                            hi everyone! i am chargi,e and im working on this new news website
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/chargie2011to2021.png" alt="Chargie2011" class="avatar" />
+                        <div class="username">ChargieAwesome</div>
+                        <div class="user-title">does news posts as hobby, hoping to be more</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:27 GMT</div>
+                        <div class="post-text">
+                            my mommy and daddy say i cant be a news person but i wanna prove them wrong
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/chargie2011to2021.png" alt="Chargie2011" class="avatar" />
+                        <div class="username">ChargieAwesome</div>
+                        <div class="user-title">does news posts as hobby, hoping to be more</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:28 GMT</div>
+                        <div class="post-text">
+                            i know im gonna be super cool and awesome like the other news people
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/default.png" alt="Default" class="avatar" />
+                        <div class="username">Anonymous #11</div>
+                        <div class="user-title"></div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:34 GMT</div>
+                        <div class="post-text">
+                            you're literally just a kid ROFL go play with toys and cry to your parents
+                        </div>
+                    </div>
+                </div>
+
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/chargie2011to2021.png" alt="Chargie2011" class="avatar" />
+                        <div class="username">ChargieAwesome</div>
+                        <div class="user-title">does news posts as hobby, hoping to be more</div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:35 GMT</div>
+                        <div class="post-text">
+                            why are you so mean im telling my mommy i dont like you
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="forum-post">
+                    <div class="post-profile">
+                        <img src="../profiles/default.png" alt="Default" class="avatar" />
+                        <div class="username">Anonymous #11</div>
+                        <div class="user-title"></div>
+                    </div>
+                    <div class="post-content">
+                        <div class="post-meta">Posted: May 22, 2012, 21:36 GMT</div>
+                        <div class="post-text">
+                            go on then kek
+                        </div>
+                    </div>
+                </div>
+
+                <div class="reply-box">
+                    <h3>Leave a Quick Reply</h3>
+                    <textarea class="reply-textarea" placeholder="Type your reply here..."></textarea>
+                    <br>
+                    <input type="submit" value="You cannot reply to archives." class="search-button" style="height: 24px;" />
+                </div>
+
+            </div>
+        </div>
+
+        <div class="right-sidebar">
+            <div class="box-feature">
+                hi hi hiiiiiiiii hello test
+    </div>
+
+</body>
+</html>
